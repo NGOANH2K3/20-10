@@ -17,6 +17,10 @@
       user-select: none;
       perspective: 1000px;
     }
+    * {
+      -webkit-tap-highlight-color: transparent;
+      outline: none;
+    }
 
     /* 🌸 Bông hoa và vòm kính */
     .flower__wrapper {
@@ -622,7 +626,7 @@
       startStars();
       loopParticles();
 
-      music = new Audio('./e.mp3');
+      music = new Audio('./Hukhong.mp3');
       music.loop = true;
       music.play().catch(() => console.log("Không thể phát nhạc tự động."));
 
@@ -730,9 +734,9 @@
     }
 
     // 🎇 Particles
-    const messages = ["20-10", "Happy Vietnamese Women's Day 💖", "Luôn Xinh Đẹp", "Hạnh Phúc"];
+    const messages = ["💝20-10💝", "Happy Vietnamese Women's Day 💖", "Luôn Xinh Đẹp", "Hạnh Phúc", "Mong Mọi Điều Tốt Đẹp Với Bạn 🤞"];
     const imageURLs = ["download.jpg"];
-    const icons = ["❤️", "❤", "💗"];
+    const icons = ["❤️", "❤", "💗", "💕"];
     const maxParticles = 120;
     const activeParticles = new Set();
 
@@ -764,6 +768,66 @@
         const p = (t - t0) / duration;
         if (p >= 1) {
           el.remove();
+          activeParticles.delete(el);
+        } else {
+          const y = startY + p * (endY - startY);
+          const op = p < 0.1 ? p * 10 : (p > 0.9 ? (1 - p) * 10 : 1);
+          el.style.opacity = op;
+          el.style.transform = `translate3d(0, ${y}px, ${z}px)`;
+          requestAnimationFrame(animate);
+        }
+      }
+
+      activeParticles.add(el);
+      requestAnimationFrame(animate);
+    }
+
+    function loopParticles() {
+      let last = 0;
+      function tick(t) {
+        if (t - last > 300) {
+          createParticle('text');
+          if (Math.random() < 0.5) createParticle('image');
+          last = t;
+        }
+        requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    }
+  </script>
+</body>
+</html>
+.remove();
+          activeParticles.delete(el);
+        } else {
+          const y = startY + p * (endY - startY);
+          const op = p < 0.1 ? p * 10 : (p > 0.9 ? (1 - p) * 10 : 1);
+          el.style.opacity = op;
+          el.style.transform = `translate3d(0, ${y}px, ${z}px)`;
+          requestAnimationFrame(animate);
+        }
+      }
+
+      activeParticles.add(el);
+      requestAnimationFrame(animate);
+    }
+
+    function loopParticles() {
+      let last = 0;
+      function tick(t) {
+        if (t - last > 300) {
+          createParticle('text');
+          if (Math.random() < 0.5) createParticle('image');
+          last = t;
+        }
+        requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    }
+  </script>
+</body>
+</html>
+.remove();
           activeParticles.delete(el);
         } else {
           const y = startY + p * (endY - startY);
