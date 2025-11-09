@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8" />
-  <title>20-10 💌</title>
+  <title>⁓HPBD⁓🎁</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.min.js"></script>
@@ -481,7 +481,42 @@
         opacity: 0;
         z-index: 6;
       }
+      .text-particle {
+        font-size: 13px !important; /* chữ nhỏ hơn cho mobile */
+      }
+      #soundToggle {
+        top: 10px;
+        right: 10px;
+        font-size: 20px;
+        padding: 8px;
+      }
     }
+    #soundToggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: rgba(255, 255, 255, 0.15);
+      color: #fff;
+      font-size: 24px;
+      border: 2px solid #fff;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      cursor: pointer;
+      z-index: 9999; /* nằm trên mọi thứ, không bị ảnh hưởng */
+      backdrop-filter: blur(5px);
+      transition: all 0.3s ease;
+      user-select: none; /* tránh highlight */
+      -webkit-tap-highlight-color: transparent; /* tránh nháy xanh trên mobile */
+      display: none; /* 🚫 Ẩn lúc đầu */
+    }
+
+    #soundToggle:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: scale(1.15);
+    }
+
+
   </style>
 </head>
 <body>
@@ -531,15 +566,7 @@
   <div id="galaxy"></div>
   <div id="rotatingContainer"></div>
  <!-- ✉️ Thiệp 3D -->
-  <!-- <div id="card">
-    <div class="card-inner">
-      <img class="card-front" src="thu3.png" alt="Thiệp 20-10" />
-      <img class="card-back" src="thu4.png" alt="Thiệp 20-10" />
-    </div>
-  </div>
-  <div id="text"></div> -->
-<!-- ✉️ Thiệp 3D -->
-<div id="card">
+ <div id="card">
   <div class="card-inner">
     <div class="card-front">
       <img src="thu3.png" alt="Thiệp 20-10" />
@@ -550,6 +577,8 @@
     </div>
   </div>
 </div>
+<button id="soundToggle" title="Bật/Tắt nhạc 🎵">🔊</button>
+<!-- ✉️ Thiệp 3D -->
 
   <script>
     const flowerWrapper = document.getElementById("flowerWrapper");
@@ -626,17 +655,40 @@
       startStars();
       loopParticles();
 
-      music = new Audio('./Hukhong.mp3');
+      music = new Audio('./happy-birthday.mp3');
       music.loop = true;
       music.play().catch(() => console.log("Không thể phát nhạc tự động."));
+      // 🎵 Nút bật/tắt âm thanh
+      const soundBtn = document.getElementById('soundToggle');
+      let isMuted = false;
+      setTimeout(() => {
+        soundBtn.style.display = 'block';
+        gsap.fromTo(soundBtn, { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 1, ease: "back.out(1.7)" });
+      }, 1200);
 
-      // initCardAnimation();
+      soundBtn.addEventListener('click', (e) => {
+        e.stopPropagation(); // 🚫 CHẶN sự kiện lan lên phần thiệp
+        if (!music) return;
+
+        if (isMuted) {
+          music.play();
+          soundBtn.textContent = '🔊';
+        } else {
+          music.pause();
+          soundBtn.textContent = '🔈';
+        }
+        isMuted = !isMuted;
+      });
+
+
+
+       initCardAnimation();
     }
 
     // ✉️ Hiệu ứng thiệp
     // function initCardAnimation() {
-      const message = `Chúc bạn một ngày 20/10 thật hạnh phúc 💖 
-                        Luôn xinh đẹp, dịu dàng và tỏa sáng như chính bạn 🌸`;
+      const message = `Chúc Bạn Sinh Nhật Vui Vẻ, Hạnh Phúc Bên Gia Đình ✨🎁✨  
+                      Tuổi mới thật nhiều niềm vui, sức khỏe và luôn thành công trong cuộc sống!💖`;
       let opened = false; // trạng thái thiệp 
       let typingFinished = true; // khóa click khi text chưa xong 
       let typingTimeouts = []; // lưu các timeout để clear nếu cần
@@ -734,9 +786,9 @@
     }
 
     // 🎇 Particles
-    const messages = ["💝20-10💝", "Happy Vietnamese Women's Day 💖", "Luôn Xinh Đẹp", "Hạnh Phúc", "Mong Mọi Điều Tốt Đẹp Với Bạn 🤞"];
-    const imageURLs = ["download.jpg"];
-    const icons = ["❤️", "❤", "💗", "💕"];
+    const messages = ["💝Sinh Nhật Vui Vẻ💝", "Happy Birth Day 💖", "Luôn Mạnh Khỏe", "Hạnh Phúc (❤ ω ❤)", "Mong Mọi Điều Tốt Đẹp Với Bạn ༼ つ ◕_◕ ༽つ"];
+    const imageURLs = ["birthday.png"];
+    const icons = ["❤️", "❤", "💗", "💕","✨"];
     const maxParticles = 120;
     const activeParticles = new Set();
 
